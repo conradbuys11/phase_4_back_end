@@ -1,0 +1,2 @@
+class StatusEffectsController < ApplicationController
+end

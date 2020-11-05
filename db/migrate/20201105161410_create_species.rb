@@ -4,12 +4,12 @@ class CreateSpecies < ActiveRecord::Migration[6.0]
       t.string :name
       t.string :sprite_front
       t.string :sprite_back
-      t.int :hp_base
-      t.int :atk_base
-      t.int :def_base
-      t.int :spa_base
-      t.int :spd_base
-      t.int :spe_base
+      t.integer :hp_base
+      t.integer :atk_base
+      t.integer :def_base
+      t.integer :spa_base
+      t.integer :spd_base
+      t.integer :spe_base
 
       t.timestamps
     end

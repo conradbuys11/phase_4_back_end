@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  resources :trainer_categories
+  resources :trainers
+  resources :pokemons
+  resources :pokemon_moves
+  resources :move_status_effects
+  resources :status_effects
+  resources :moves
   resources :species_types
   resources :species
   resources :types
