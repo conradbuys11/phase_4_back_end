@@ -66,3 +66,29 @@ while x <= 151
     end
     x += 1
 end
+
+StatusEffect.create([{
+    name: 'paralysis',
+    accuracy: 0.26
+},
+{
+    name: 'sleep',
+    accuracy: 1,
+    duration: 3
+},
+{
+    name: 'poison',
+    accuracy: 1,
+    power: 12.5
+},
+{
+    name: 'burn',
+    accuracy: 1,
+    power: 6.25
+},
+{
+    name: 'confusion',
+    accuracy: 0.33,
+    power: 15
+})
+

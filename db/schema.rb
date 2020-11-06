@@ -81,8 +81,8 @@ ActiveRecord::Schema.define(version: 2020_11_05_165519) do
 
   create_table "status_effects", force: :cascade do |t|
     t.string "name"
-    t.integer "accuracy"
-    t.integer "power"
+    t.float "accuracy"
+    t.float "power"
     t.integer "duration"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
