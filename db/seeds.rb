@@ -1,15 +1,13 @@
 require 'poke-api-v2'
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
 
 # Type.destroy_all
-SpeciesType.destroy_all
-Species.destroy_all
+# SpeciesType.destroy_all
+PokemonMove.destroy_all
+Pokemon.destroy_all
+StatusEffect.destroy_all
+# Species.destroy_all
+Move.destroy_all
+
 
 
 # types = Type.create([
@@ -33,41 +31,38 @@ Species.destroy_all
 #     {name: 'Fairy', value: 131072, double_against: 49216, half_against: 65666, immune_against: 0}
 # ])
 
-# Species.create({
-#     name: 'Bulbasaur',
-#     sprite_front: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
-#     sprite_front: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/1.png',
+# x = 1
+# while x <= 151
+#     resp = PokeApi.get(pokemon: x)
 
-# })
-x = 1
-while x <= 151
-    resp = PokeApi.get(pokemon: x)
+#     species = Species.create({
+#         name: resp.species.name.capitalize(),
+#         sprite_front: resp.sprites.front_default,
+#         sprite_back: resp.sprites.back_default,
+#         hp_base: resp.stats[0].base_stat,
+#         atk_base: resp.stats[1].base_stat,
+#         def_base: resp.stats[2].base_stat,
+#         spa_base: resp.stats[3].base_stat,
+#         spd_base: resp.stats[4].base_stat,
+#         spe_base: resp.stats[5].base_stat
+#     })
 
-    species = Species.create({
-        name: resp.species.name.capitalize(),
-        sprite_front: resp.sprites.front_default,
-        sprite_back: resp.sprites.back_default,
-        hp_base: resp.stats[0].base_stat,
-        atk_base: resp.stats[1].base_stat,
-        def_base: resp.stats[2].base_stat,
-        spa_base: resp.stats[3].base_stat,
-        spd_base: resp.stats[4].base_stat,
-        spe_base: resp.stats[5].base_stat
-    })
-
-    y = 0
-    while y < resp.types.length
-        type = Type.find_by(name: resp.types[y].type.name.capitalize())
-        SpeciesType.create({
-            species: species,
-            type: type
-        })
-        y += 1
-    end
-    x += 1
-end
+#     y = 0
+#     while y < resp.types.length
+#         type = Type.find_by(name: resp.types[y].type.name.capitalize())
+#         SpeciesType.create({
+#             species: species,
+#             type: type
+#         })
+#         y += 1
+#     end
+#     x += 1
+# end
 
 StatusEffect.create([{
+    name: 'none'
+},
+{
     name: 'paralysis',
     accuracy: 0.26
 },
@@ -90,5 +85,44 @@ StatusEffect.create([{
     name: 'confusion',
     accuracy: 0.33,
     power: 15
-})
+}])
 
+
+movesToAdd = ['poison-powder', 'seed-bomb', 'razor-leaf', 'sludge-bomb']
+movesToAdd.each do |move|
+    resp = PokeApi.get(move: move)
+    type = Type.find_by(name: resp.type.name.capitalize())
+    newMove = Move.create({
+        name: resp.name.split('-').join(" ").capitalize(),
+        category: resp.damage_class.name,
+        power: resp.power,
+        accuracy: resp.accuracy,
+        type: type
+    })
+end
+
+pokemonToAdd = ['venusaur', 'charizard', 'blastoise']
+pokemonToAdd.each do |pmon|
+    species = Species.find_by(name: pmon.capitalize())
+    pokemon = Pokemon.create({
+        current_hp: species.hp_base,
+        species: species,
+        status_effect: StatusEffect.first
+    })
+    PokemonMove.create([{
+        pokemon: pokemon,
+        move: Move.first
+    },
+    {
+        pokemon: pokemon,
+        move: Move.second
+    },
+    {
+        pokemon: pokemon,
+        move: Move.third
+    },
+    {
+        pokemon: pokemon,
+        move: Move.fourth
+    }])
+end
