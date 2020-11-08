@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_05_165519) do
+ActiveRecord::Schema.define(version: 2020_11_05_162905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,13 +47,15 @@ ActiveRecord::Schema.define(version: 2020_11_05_165519) do
 
   create_table "pokemons", force: :cascade do |t|
     t.integer "current_hp"
-    t.bigint "status_effect_id", null: false
+    t.bigint "status_effect_id"
     t.bigint "species_id", null: false
     t.text "stat_modifiers"
+    t.bigint "trainer_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["species_id"], name: "index_pokemons_on_species_id"
     t.index ["status_effect_id"], name: "index_pokemons_on_status_effect_id"
+    t.index ["trainer_id"], name: "index_pokemons_on_trainer_id"
   end
 
   create_table "species", force: :cascade do |t|
@@ -133,6 +135,7 @@ ActiveRecord::Schema.define(version: 2020_11_05_165519) do
   add_foreign_key "pokemon_moves", "pokemons"
   add_foreign_key "pokemons", "species"
   add_foreign_key "pokemons", "status_effects"
+  add_foreign_key "pokemons", "trainers"
   add_foreign_key "species_types", "species"
   add_foreign_key "species_types", "types"
   add_foreign_key "trainers", "trainer_categories"

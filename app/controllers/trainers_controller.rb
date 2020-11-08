@@ -1,11 +1,11 @@
 class TrainersController < ApplicationController
-    def show
-        trainer = Trainer.find_by(strong_params)
-        render json: 
+    def index
+        trainers = Trainer.all
+        render json: trainers.to_json(include: {trainer_category: {}, pokemons: {include: [:species, :status_effect, :moves => {include: [:move_status_effects, :status_effects]}]}})
     end
-
-    private
-    def strong_params
-        params.require(:trainer).permit(:id)
+    
+    def show
+        trainer = Trainer.find(params[:id])
+        render json: trainer.to_json(include: [:trainer_category, :pokemons => {include: [:species, :status_effect, :moves => {include: [:move_status_effects, :status_effects]}]}])
     end
 end
