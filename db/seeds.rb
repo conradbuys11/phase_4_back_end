@@ -93,7 +93,10 @@ StatusEffect.create([{
 movesToAdd = ['poison-powder', 'seed-bomb', 'razor-leaf', 
 'sludge-bomb', 'water-pulse', 'flash-cannon', 'bite', 'hydro-pump', 'body-slam', 
 'flamethrower', 'aerial-ace', 'dragon-breath', 'play-rough', 'poison-fang', 'air-cutter',
-'shadow-ball', 'thunder-punch', 'thunderbolt', 'psychic']
+'shadow-ball', 'thunder-punch', 'thunderbolt', 'psychic', 'confusion', 'ice-beam', 'blizzard',
+'signal-beam', 'x-scissor', 'dragon-claw', 'dazzling-gleam', 'brick-break', 'drill-run', 'earth-power',
+'rock-slide', 'power-gem', 'iron-head', 'fire-punch', 'horn-attack', 'peck', 'astonish', 'lick',
+'stomp', 'water-gun', 'splash', 'tackle']
 movesToAdd.each do |move|
     resp = PokeApi.get(move: move)
     type = Type.find_by(name: resp.type.name.capitalize())
@@ -115,55 +118,65 @@ def CreateMoveStatus(move_name, status_name, accuracy)
     })
 end
 
-# CreateMoveStatus('Poison Powder', 'poison', 100)
-# CreateMoveStatus('Sludge Bomb', 'poison', 30)
-# CreateMoveStatus('Water Pulse', 'confusion', 20)
-# CreateMoveStatus('Body Slam', 'paralysis', 30)
-# CreateMoveStatus('Flamethrower', 'burn', 10)
-# CreateMoveStatus('Dragon Breath', 'paralysis', 30)
-# CreateMoveStatus('Poison Fang', 'poison', 50)
-MoveStatusEffect.create([{
-    move: Move.find_by(name: 'Poison Powder'),
-    status_effect: StatusEffect.find_by(name: 'poison'),
-    accuracy: 100
-},{
-    move: Move.find_by(name: 'Sludge Bomb'),
-    status_effect: StatusEffect.find_by(name: 'poison'),
-    accuracy: 30
-},{
-    move: Move.find_by(name: 'Water Pulse'),
-    status_effect: StatusEffect.find_by(name: 'confusion'),
-    accuracy: 20
-},{
-    move: Move.find_by(name: 'Body Slam'),
-    status_effect: StatusEffect.find_by(name: 'paralysis'),
-    accuracy: 30
-},{
-    move: Move.find_by(name: 'Flamethrower'),
-    status_effect: StatusEffect.find_by(name: 'burn'),
-    accuracy: 10
-},{
-    move: Move.find_by(name: 'Dragon Breath'),
-    status_effect: StatusEffect.find_by(name: 'paralysis'),
-    accuracy: 30
-},{
-    move: Move.find_by(name: 'Poison Fang'),
-    status_effect: StatusEffect.find_by(name: 'poison'),
-    accuracy: 50
-}
-])
+CreateMoveStatus('Poison Powder', 'poison', 100)
+CreateMoveStatus('Sludge Bomb', 'poison', 30)
+CreateMoveStatus('Water Pulse', 'confusion', 20)
+CreateMoveStatus('Body Slam', 'paralysis', 30)
+CreateMoveStatus('Flamethrower', 'burn', 10)
+CreateMoveStatus('Dragon Breath', 'paralysis', 30)
+CreateMoveStatus('Poison Fang', 'poison', 50)
+CreateMoveStatus('Thunder Punch', 'paralysis', 10)
+CreateMoveStatus('Thunderbolt', 'paralysis', 10)
+CreateMoveStatus('Confusion', 'confusion', 10)
+CreateMoveStatus('Signal Beam', 'confusion', 10)
+CreateMoveStatus('Fire Punch', 'burn', 10)
+CreateMoveStatus('Lick', 'paralysis', 30)
+# MoveStatusEffect.create([{
+#     move: Move.find_by(name: 'Poison Powder'),
+#     status_effect: StatusEffect.find_by(name: 'poison'),
+#     accuracy: 100
+# },{
+#     move: Move.find_by(name: 'Sludge Bomb'),
+#     status_effect: StatusEffect.find_by(name: 'poison'),
+#     accuracy: 30
+# },{
+#     move: Move.find_by(name: 'Water Pulse'),
+#     status_effect: StatusEffect.find_by(name: 'confusion'),
+#     accuracy: 20
+# },{
+#     move: Move.find_by(name: 'Body Slam'),
+#     status_effect: StatusEffect.find_by(name: 'paralysis'),
+#     accuracy: 30
+# },{
+#     move: Move.find_by(name: 'Flamethrower'),
+#     status_effect: StatusEffect.find_by(name: 'burn'),
+#     accuracy: 10
+# },{
+#     move: Move.find_by(name: 'Dragon Breath'),
+#     status_effect: StatusEffect.find_by(name: 'paralysis'),
+#     accuracy: 30
+# },{
+#     move: Move.find_by(name: 'Poison Fang'),
+#     status_effect: StatusEffect.find_by(name: 'poison'),
+#     accuracy: 50
+# }
+# ])
 
-# def CreatePokemon(pokemon_name, move_names)
-#     species = Species.find_by(name: pokemon_name.capitalize())
-#     pokemon = Pokemon.create({
-#         current_hp: species.hp_base,
-#         species: species,
-#         status_effect: StatusEffect.first
-#     })
-#     move_names.each do |move_name|
-
-#     end
-# end
+def CreatePokemon(pokemon_name, trainer_name, move_names)
+    species = Species.find_by(name: pokemon_name.capitalize())
+    pokemon = Pokemon.create({
+        current_hp: species.hp_base,
+        species: species,
+        status_effect: StatusEffect.first,
+        trainer: Trainer.find_by(name: trainer_name.capitalize())
+    })
+    move_names.each do |move_name|
+        PokemonMove.create({
+            pokemon: pokemon,
+            move: Move.find_by(name: move_name)
+        })
+    end
+end
 
 TrainerCategory.create([{
     name: 'Player'
@@ -175,62 +188,82 @@ TrainerCategory.create([{
 Trainer.create([{
     name: 'Conrad',
     trainer_category: TrainerCategory.first
-},
-{
+},{
     name: 'Chad',
     trainer_category: TrainerCategory.second
-}])
+},{
+    name: 'Connor',
+    trainer_category: TrainerCategory.second
+},{
+    name: 'Dum',
+    trainer_category: TrainerCategory.second
+}
+])
 
-pokemonToAdd = ['venusaur', 'charizard', 'blastoise']
-pokemonToAdd.each do |pmon|
-    species = Species.find_by(name: pmon.capitalize())
-    pokemon = Pokemon.create({
-        current_hp: species.hp_base,
-        species: species,
-        status_effect: StatusEffect.first,
-        trainer: Trainer.first
-    })
-    PokemonMove.create([{
-        pokemon: pokemon,
-        move: Move.first, 
-    },
-    {
-        pokemon: pokemon,
-        move: Move.second,
-    },
-    {
-        pokemon: pokemon,
-        move: Move.third
-    },
-    {
-        pokemon: pokemon,
-        move: Move.fourth
-    }])
-end
+CreatePokemon('Ivysaur', 'Conrad', ['Seed Bomb', 'Poison Powder', 'Sludge Bomb', 'Razor Leaf'])
+CreatePokemon('Wartortle', 'Conrad', ['Water Pulse', 'Flash Cannon', 'Bite', 'Hydro Pump'])
+CreatePokemon('Charmeleon', 'Conrad', ['Flamethrower', 'Dragon Breath', 'Brick Break', 'Fire Punch'])
 
-rocketMons = ['psyduck', 'growlithe', 'mewtwo']
-rocketMons.each do |pmon|
-    species = Species.find_by(name: pmon.capitalize())
-    pokemon = Pokemon.create({
-        current_hp: species.hp_base,
-        species: species,
-        status_effect: StatusEffect.first,
-        trainer: Trainer.second
-    })
-    PokemonMove.create([{
-        pokemon: pokemon,
-        move: Move.first, 
-    },
-    {
-        pokemon: pokemon,
-        move: Move.second,
-    },
-    {
-        pokemon: pokemon,
-        move: Move.third
-    },
-    {
-        pokemon: pokemon,
-        move: Move.fourth
-    }])
-end
+CreatePokemon('Nidorino', 'Chad', ['Horn Attack', 'Peck', 'Poison Fang'])
+CreatePokemon('Golbat', 'Chad', ['Bite', 'Air Cutter', 'Astonish'])
+
+CreatePokemon('Seadra', 'Connor', ['Water Gun', 'Dragon Breath', 'Ice Beam'])
+CreatePokemon('Lickitung', 'Connor', ['Lick', 'Stomp'])
+
+CreatePokemon('Magikarp', 'Dum', ['Splash'])
+CreatePokemon('Magikarp', 'Dum', ['Splash'])
+CreatePokemon('Magikarp', 'Dum', ['Splash', 'Tackle'])
+
+# pokemonToAdd = ['venusaur', 'charizard', 'blastoise']
+# pokemonToAdd.each do |pmon|
+#     species = Species.find_by(name: pmon.capitalize())
+#     pokemon = Pokemon.create({
+#         current_hp: species.hp_base,
+#         species: species,
+#         status_effect: StatusEffect.first,
+#         trainer: Trainer.first
+#     })
+#     PokemonMove.create([{
+#         pokemon: pokemon,
+#         move: Move.first, 
+#     },
+#     {
+#         pokemon: pokemon,
+#         move: Move.second,
+#     },
+#     {
+#         pokemon: pokemon,
+#         move: Move.third
+#     },
+#     {
+#         pokemon: pokemon,
+#         move: Move.fourth
+#     }])
+# end
+
+# rocketMons = ['psyduck', 'growlithe', 'mewtwo']
+# rocketMons.each do |pmon|
+#     species = Species.find_by(name: pmon.capitalize())
+#     pokemon = Pokemon.create({
+#         current_hp: species.hp_base,
+#         species: species,
+#         status_effect: StatusEffect.first,
+#         trainer: Trainer.second
+#     })
+#     PokemonMove.create([{
+#         pokemon: pokemon,
+#         move: Move.first, 
+#     },
+#     {
+#         pokemon: pokemon,
+#         move: Move.second,
+#     },
+#     {
+#         pokemon: pokemon,
+#         move: Move.third
+#     },
+#     {
+#         pokemon: pokemon,
+#         move: Move.fourth
+#     }])
+# end
