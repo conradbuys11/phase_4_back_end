@@ -66,42 +66,104 @@ StatusEffect.create([{
 },
 {
     name: 'paralysis',
-    accuracy: 0.26
+    accuracy: 26
 },
 {
     name: 'sleep',
-    accuracy: 1,
+    accuracy: 100,
     duration: 3
 },
 {
     name: 'poison',
-    accuracy: 1,
+    accuracy: 100,
     power: 12.5
 },
 {
     name: 'burn',
-    accuracy: 1,
+    accuracy: 100,
     power: 6.25
 },
 {
     name: 'confusion',
-    accuracy: 0.33,
+    accuracy: 33,
     power: 15
 }])
 
 
-movesToAdd = ['poison-powder', 'seed-bomb', 'razor-leaf', 'sludge-bomb']
+movesToAdd = ['poison-powder', 'seed-bomb', 'razor-leaf', 
+'sludge-bomb', 'water-pulse', 'flash-cannon', 'bite', 'hydro-pump', 'body-slam', 
+'flamethrower', 'aerial-ace', 'dragon-breath', 'play-rough', 'poison-fang', 'air-cutter',
+'shadow-ball', 'thunder-punch', 'thunderbolt', 'psychic']
 movesToAdd.each do |move|
     resp = PokeApi.get(move: move)
     type = Type.find_by(name: resp.type.name.capitalize())
+    name = resp.name.split('-').map{|word| word.capitalize()}.join(" ")
     newMove = Move.create({
-        name: resp.name.split('-').join(" ").capitalize(),
+        name: name,
         category: resp.damage_class.name,
         power: resp.power,
         accuracy: resp.accuracy,
         type: type
     })
 end
+
+def CreateMoveStatus(move_name, status_name, accuracy)
+    MoveStatusEffect.create({
+        status_effect: StatusEffect.find_by(name: status_name),
+        move: Move.find_by(name: move_name),
+        accuracy: accuracy
+    })
+end
+
+# CreateMoveStatus('Poison Powder', 'poison', 100)
+# CreateMoveStatus('Sludge Bomb', 'poison', 30)
+# CreateMoveStatus('Water Pulse', 'confusion', 20)
+# CreateMoveStatus('Body Slam', 'paralysis', 30)
+# CreateMoveStatus('Flamethrower', 'burn', 10)
+# CreateMoveStatus('Dragon Breath', 'paralysis', 30)
+# CreateMoveStatus('Poison Fang', 'poison', 50)
+MoveStatusEffect.create([{
+    move: Move.find_by(name: 'Poison Powder'),
+    status_effect: StatusEffect.find_by(name: 'poison'),
+    accuracy: 100
+},{
+    move: Move.find_by(name: 'Sludge Bomb'),
+    status_effect: StatusEffect.find_by(name: 'poison'),
+    accuracy: 30
+},{
+    move: Move.find_by(name: 'Water Pulse'),
+    status_effect: StatusEffect.find_by(name: 'confusion'),
+    accuracy: 20
+},{
+    move: Move.find_by(name: 'Body Slam'),
+    status_effect: StatusEffect.find_by(name: 'paralysis'),
+    accuracy: 30
+},{
+    move: Move.find_by(name: 'Flamethrower'),
+    status_effect: StatusEffect.find_by(name: 'burn'),
+    accuracy: 10
+},{
+    move: Move.find_by(name: 'Dragon Breath'),
+    status_effect: StatusEffect.find_by(name: 'paralysis'),
+    accuracy: 30
+},{
+    move: Move.find_by(name: 'Poison Fang'),
+    status_effect: StatusEffect.find_by(name: 'poison'),
+    accuracy: 50
+}
+])
+
+# def CreatePokemon(pokemon_name, move_names)
+#     species = Species.find_by(name: pokemon_name.capitalize())
+#     pokemon = Pokemon.create({
+#         current_hp: species.hp_base,
+#         species: species,
+#         status_effect: StatusEffect.first
+#     })
+#     move_names.each do |move_name|
+
+#     end
+# end
 
 TrainerCategory.create([{
     name: 'Player'
