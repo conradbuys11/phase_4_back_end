@@ -16,7 +16,7 @@ types = Type.create([
     {name: 'Normal', value: 1, double_against: 0, half_against: 69632, immune_against: 8192},
     {name: 'Fire', value: 2, double_against: 67632, half_against: 20486, immune_against: 0},
     {name: 'Water', value: 4, double_against: 4354, half_against: 16404, immune_against: 0},
-    {name: 'Electic', value: 8, double_against: 516, half_against: 16408, immune_against: 256},
+    {name: 'Electric', value: 8, double_against: 516, half_against: 16408, immune_against: 256},
     {name: 'Grass', value: 16, double_against: 4356, half_against: 84626, immune_against: 0},
     {name: 'Ice', value: 32, double_against: 17168, half_against: 65574, immune_against: 0},
     {name: 'Fighting', value: 64, double_against: 102433, half_against: 134784, immune_against: 8192},
@@ -183,6 +183,8 @@ TrainerCategory.create([{
 },
 {
     name: 'Rocket Grunt'
+},{
+    name: 'Cool Guy'
 }])
 
 Trainer.create([{
@@ -197,6 +199,9 @@ Trainer.create([{
 },{
     name: 'Dum',
     trainer_category: TrainerCategory.second
+},{
+    name: 'Mark',
+    trainer_category: TrainerCategory.third
 }
 ])
 
@@ -213,6 +218,10 @@ CreatePokemon('Lickitung', 'Connor', ['Lick', 'Stomp'])
 CreatePokemon('Magikarp', 'Dum', ['Splash'])
 CreatePokemon('Magikarp', 'Dum', ['Splash'])
 CreatePokemon('Magikarp', 'Dum', ['Splash', 'Tackle'])
+
+CreatePokemon('Electabuzz', 'Mark', ['Thunder Punch', 'Flash Cannon', 'Stomp', 'Fire Punch'])
+CreatePokemon('Kadabra', 'Mark', ['Psychic', 'Confusion', 'Shadow Ball', 'Ice Beam'])
+CreatePokemon('Dragonair', 'Mark', ['Dragon Breath', 'Signal Beam', 'Water Gun'])
 
 # pokemonToAdd = ['venusaur', 'charizard', 'blastoise']
 # pokemonToAdd.each do |pmon|
