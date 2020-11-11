@@ -33,20 +33,31 @@ types = Type.create([
     {name: 'Fairy', value: 131072, double_against: 49216, half_against: 65666, immune_against: 0}
 ])
 
+def calculateStats(statArray)
+    returnArray = []
+    returnArray.push(statArray[0].base_stat + 60) #hp calculation w/o ivs, evs, level 50
+    x = 1
+    while x < 6
+        returnArray.push(statArray[x].base_stat + 5)
+        x += 1
+    end
+    return returnArray
+end
+
 x = 1
 while x <= 151
     resp = PokeApi.get(pokemon: x)
-
+    statArray = calculateStats(resp.stats)
     species = Species.create({
         name: resp.species.name.capitalize(),
         sprite_front: resp.sprites.front_default,
         sprite_back: resp.sprites.back_default,
-        hp_base: resp.stats[0].base_stat,
-        atk_base: resp.stats[1].base_stat,
-        def_base: resp.stats[2].base_stat,
-        spa_base: resp.stats[3].base_stat,
-        spd_base: resp.stats[4].base_stat,
-        spe_base: resp.stats[5].base_stat
+        hp_base: statArray[0],
+        atk_base: statArray[1],
+        def_base: statArray[2],
+        spa_base: statArray[3],
+        spd_base: statArray[4],
+        spe_base: statArray[5]
     })
 
     y = 0
