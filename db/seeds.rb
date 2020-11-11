@@ -298,7 +298,7 @@ CreatePokemon('Persian', 'Giovanni', ['Slash', 'Feint Attack'])
 CreatePokemon('Rhydon', 'Giovanni', ['Rock Slide', 'Earthquake', 'Horn Attack', 'Surf'])
 CreatePokemon('Nidoking', 'Giovanni', ['Megahorn', 'Poison Jab', 'Earth Power', 'Thunder Punch'])
 
-CreatePokemon('Mewtwo', 'Testtrainer', ['Sing', 'Confuse Ray', 'Dynamic Punch', 'Harden'])
+CreatePokemon('Mewtwo', 'Testtrainer', ['Sing', 'Confuse Ray', 'Dynamic Punch', 'Thunder Wave'])
 CreatePokemon('Mewtwo', 'Testtrainer', ['Sing', 'Confuse Ray', 'Dynamic Punch', 'Harden'])
 CreatePokemon('Mewtwo', 'Testtrainer', ['Sing', 'Confuse Ray', 'Dynamic Punch', 'Harden'])
 CreatePokemon('Mewtwo', 'Testtrainer', ['Sing', 'Confuse Ray', 'Dynamic Punch', 'Harden'])
