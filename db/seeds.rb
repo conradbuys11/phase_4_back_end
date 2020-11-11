@@ -213,6 +213,9 @@ Trainer.create([{
 },{
     name: 'Mark',
     trainer_category: TrainerCategory.third
+},{
+    name: 'Myner'
+    trainer_category: TrainerCategory.second
 }
 ])
 
@@ -233,6 +236,10 @@ CreatePokemon('Magikarp', 'Dum', ['Splash', 'Tackle'])
 CreatePokemon('Electabuzz', 'Mark', ['Thunder Punch', 'Flash Cannon', 'Stomp', 'Fire Punch'])
 CreatePokemon('Kadabra', 'Mark', ['Psychic', 'Confusion', 'Shadow Ball', 'Ice Beam'])
 CreatePokemon('Dragonair', 'Mark', ['Dragon Breath', 'Signal Beam', 'Water Gun'])
+
+CreatePokemon('Geodude', 'Myner', ['Tackle', 'Earth Power']) #maybe make him have a less powerful ground move lmfao
+CreatePokemon('Graveler', 'Myner', ['Earth Power', 'Rock Slide', 'Tackle'])
+CreatePokemon('Onix', 'Myner', ['Rock Slide', 'Earth Power'])
 
 # pokemonToAdd = ['venusaur', 'charizard', 'blastoise']
 # pokemonToAdd.each do |pmon|
