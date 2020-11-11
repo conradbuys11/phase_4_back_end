@@ -107,7 +107,10 @@ movesToAdd = ['poison-powder', 'seed-bomb', 'razor-leaf',
 'shadow-ball', 'thunder-punch', 'thunderbolt', 'psychic', 'confusion', 'ice-beam', 'blizzard',
 'signal-beam', 'x-scissor', 'dragon-claw', 'dazzling-gleam', 'brick-break', 'drill-run', 'earth-power',
 'rock-slide', 'power-gem', 'iron-head', 'fire-punch', 'horn-attack', 'peck', 'astonish', 'lick',
-'stomp', 'water-gun', 'splash', 'tackle']
+'stomp', 'water-gun', 'splash', 'tackle', 'ancient-power', 'dynamic-punch', 'feint-attack', 'thunder-wave',
+'mud-slap', 'confuse-ray', 'thunder-shock', 'pay-day', 'scratch', 'poison-gas', 'smog', 'acid', 'mud-bomb',
+'disarming-voice', 'sing', 'pound', 'swift', 'psybeam', 'slash', 'surf', 'earthquake', 'poison-jab', 'megahorn',
+'supersonic', 'stun-spore', 'gust', 'harden']
 movesToAdd.each do |move|
     resp = PokeApi.get(move: move)
     type = Type.find_by(name: resp.type.name.capitalize())
@@ -142,6 +145,17 @@ CreateMoveStatus('Confusion', 'confusion', 10)
 CreateMoveStatus('Signal Beam', 'confusion', 10)
 CreateMoveStatus('Fire Punch', 'burn', 10)
 CreateMoveStatus('Lick', 'paralysis', 30)
+CreateMoveStatus('Dynamic Punch', 'confusion', 100)
+CreateMoveStatus('Thunder Wave', 'paralysis', 100)
+CreateMoveStatus('Confuse Ray', 'confusion', 100)
+CreateMoveStatus('Thunder Shock', 'paralysis', 10)
+CreateMoveStatus('Poison Gas', 'poison', 100)
+CreateMoveStatus('Smog', 'poison', 40)
+CreateMoveStatus('Sing', 'sleep', 100)
+CreateMoveStatus('Psybeam', 'confusion', 10)
+CreateMoveStatus('Poison Jab', 'poison', 30)
+CreateMoveStatus('Supersonic', 'confusion', 100)
+CreateMoveStatus('Stun Spore', 'paralysis', 100)
 # MoveStatusEffect.create([{
 #     move: Move.find_by(name: 'Poison Powder'),
 #     status_effect: StatusEffect.find_by(name: 'poison'),
@@ -175,6 +189,7 @@ CreateMoveStatus('Lick', 'paralysis', 30)
 
 def CreatePokemon(pokemon_name, trainer_name, move_names)
     species = Species.find_by(name: pokemon_name.capitalize())
+    puts(pokemon_name + " " + species.name)
     pokemon = Pokemon.create({
         current_hp: species.hp_base,
         species: species,
@@ -196,6 +211,8 @@ TrainerCategory.create([{
     name: 'Rocket Grunt'
 },{
     name: 'Cool Guy'
+},{
+    name: 'Rocket Boss'
 }])
 
 Trainer.create([{
@@ -204,6 +221,7 @@ Trainer.create([{
 },{
     name: 'Chad',
     trainer_category: TrainerCategory.second
+    #difficulty:
 },{
     name: 'Connor',
     trainer_category: TrainerCategory.second
@@ -214,7 +232,22 @@ Trainer.create([{
     name: 'Mark',
     trainer_category: TrainerCategory.third
 },{
-    name: 'Myner'
+    name: 'Myner',
+    trainer_category: TrainerCategory.second
+},{
+    name: 'Dumas',
+    trainer_category: TrainerCategory.second
+},{
+    name: 'Jj',
+    trainer_category: TrainerCategory.second
+},{
+    name: 'Gipthorp',
+    trainer_category: TrainerCategory.second
+},{
+    name: 'Giovanni',
+    trainer_category: TrainerCategory.fourth
+},{
+    name: 'Daniel',
     trainer_category: TrainerCategory.second
 }
 ])
@@ -237,9 +270,31 @@ CreatePokemon('Electabuzz', 'Mark', ['Thunder Punch', 'Flash Cannon', 'Stomp', '
 CreatePokemon('Kadabra', 'Mark', ['Psychic', 'Confusion', 'Shadow Ball', 'Ice Beam'])
 CreatePokemon('Dragonair', 'Mark', ['Dragon Breath', 'Signal Beam', 'Water Gun'])
 
-CreatePokemon('Geodude', 'Myner', ['Tackle', 'Earth Power']) #maybe make him have a less powerful ground move lmfao
-CreatePokemon('Graveler', 'Myner', ['Earth Power', 'Rock Slide', 'Tackle'])
+CreatePokemon('Geodude', 'Myner', ['Tackle', 'Mud Slap']) #maybe make him have a less powerful ground move lmfao
+CreatePokemon('Graveler', 'Myner', ['Earth Power', 'Rock Slide', 'Tackle', 'Mud Slap'])
 CreatePokemon('Onix', 'Myner', ['Rock Slide', 'Earth Power'])
+
+CreatePokemon('Zubat', 'Dumas', ['Confuse Ray'])
+CreatePokemon('Mankey', 'Dumas', ['Dynamic Punch'])
+CreatePokemon('Voltorb', 'Dumas', ['Thunder Wave', 'Thunder Shock'])
+
+CreatePokemon('Meowth', 'Jj', ['Pay Day', 'Scratch', 'Bite'])
+CreatePokemon('Koffing', 'Jj', ['Poison Gas', 'Smog', 'Tackle'])
+CreatePokemon('Ekans', 'Jj', ['Acid', 'Bite', 'Mud Bomb'])
+
+CreatePokemon('Clefairy', 'Gipthorp', ['Disarming Voice', 'Sing', 'Pound'])
+CreatePokemon('Psyduck', 'Gipthorp', ['Water Gun', 'Confusion', 'Splash'])
+CreatePokemon('Porygon', 'Gipthorp', ['Swift', 'Psybeam', 'Signal Beam', 'Ice Beam'])
+
+CreatePokemon('Paras', 'Daniel', ['Scratch', 'X Scissor', 'Stun Spore'])
+CreatePokemon('Venomoth', 'Daniel', ['Supersonic', 'Tackle', 'Poison Sting'])
+CreatePokemon('Butterfree', 'Daniel', ['Gust', 'Confusion', 'Supersonic'])
+CreatePokemon('Metapod', 'Daniel', ['Harden'])
+
+CreatePokemon('Persian', 'Giovanni', ['Slash', 'Feint Attack'])
+CreatePokemon('Rhydon', 'Giovanni', ['Rock Slide', 'Earthquake', 'Horn Attack', 'Surf'])
+CreatePokemon('Nidoking', 'Giovanni', ['Megahorn', 'Poison Jab', 'Earth Power', 'Thunder Punch'])
+
 
 # pokemonToAdd = ['venusaur', 'charizard', 'blastoise']
 # pokemonToAdd.each do |pmon|
