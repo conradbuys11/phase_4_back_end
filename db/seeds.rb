@@ -249,6 +249,9 @@ Trainer.create([{
 },{
     name: 'Daniel',
     trainer_category: TrainerCategory.second
+},{
+    name: 'Testtrainer',
+    trainer_category: TrainerCategory.first
 }
 ])
 
@@ -294,6 +297,12 @@ CreatePokemon('Metapod', 'Daniel', ['Harden'])
 CreatePokemon('Persian', 'Giovanni', ['Slash', 'Feint Attack'])
 CreatePokemon('Rhydon', 'Giovanni', ['Rock Slide', 'Earthquake', 'Horn Attack', 'Surf'])
 CreatePokemon('Nidoking', 'Giovanni', ['Megahorn', 'Poison Jab', 'Earth Power', 'Thunder Punch'])
+
+CreatePokemon('Mewtwo', 'Testtrainer', ['Sing', 'Confuse Ray', 'Dynamic Punch', 'Harden'])
+CreatePokemon('Mewtwo', 'Testtrainer', ['Sing', 'Confuse Ray', 'Dynamic Punch', 'Harden'])
+CreatePokemon('Mewtwo', 'Testtrainer', ['Sing', 'Confuse Ray', 'Dynamic Punch', 'Harden'])
+CreatePokemon('Mewtwo', 'Testtrainer', ['Sing', 'Confuse Ray', 'Dynamic Punch', 'Harden'])
+CreatePokemon('Mewtwo', 'Testtrainer', ['Sing', 'Confuse Ray', 'Dynamic Punch', 'Harden'])
 
 
 # pokemonToAdd = ['venusaur', 'charizard', 'blastoise']
