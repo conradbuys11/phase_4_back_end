@@ -48,10 +48,12 @@ x = 1
 while x <= 151
     resp = PokeApi.get(pokemon: x)
     statArray = calculateStats(resp.stats)
+    pokeIcon = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-vii/icons/" + resp.id.to_s() + ".png"
     species = Species.create({
         name: resp.species.name.capitalize(),
         sprite_front: resp.sprites.front_default,
         sprite_back: resp.sprites.back_default,
+        icon: pokeIcon,
         hp_base: statArray[0],
         atk_base: statArray[1],
         def_base: statArray[2],
